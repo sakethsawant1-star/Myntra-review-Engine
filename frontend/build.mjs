@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
-const projectDir = path.dirname(new URL(import.meta.url).pathname).replace(/^\/(\w):/, '$1:');
+import { fileURLToPath } from 'url';
+
+const projectDir = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(projectDir, 'dist');
 
 // Ensure dist directory exists
@@ -18,6 +20,13 @@ filesToCopy.forEach(file => {
         path.join(distDir, file)
     );
 });
+
+// Copy assets directory if it exists
+const assetsDir = path.join(projectDir, 'assets');
+const distAssetsDir = path.join(distDir, 'assets');
+if (fs.existsSync(assetsDir)) {
+    fs.cpSync(assetsDir, distAssetsDir, { recursive: true });
+}
 
 // Generate config.js from template and environment variables
 const template = fs.readFileSync(path.join(projectDir, 'config.template.js'), 'utf8');

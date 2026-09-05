@@ -207,6 +207,8 @@ function renderThemes() {
   if (questionValue) questionValue.textContent = themes.length;
   if (questionSub) questionSub.textContent = `top themes detected`;
 
+  const maxCount = themes.length > 0 ? Math.max(...themes.map(t => t.count)) : 1;
+
   themesContainer.innerHTML = themes.map(t => `
     <div class="theme-card">
       <div class="theme-header">
@@ -215,16 +217,8 @@ function renderThemes() {
       </div>
       <div class="theme-volume">Volume: <strong>${t.count.toLocaleString()}</strong></div>
       
-      <div class="theme-bar-container">
-        <div class="theme-bar-labels">
-          <span class="label-pos">Positive</span>
-          <span class="label-neg">Negative</span>
-        </div>
-        <div class="theme-bar">
-          <div class="bar-segment pos" style="width: ${t.posPct}%"></div>
-          <div class="bar-segment neu" style="width: ${t.neuPct}%"></div>
-          <div class="bar-segment neg" style="width: ${t.negPct}%"></div>
-        </div>
+      <div class="theme-bar-container" style="margin-top:12px;">
+        <div class="bar-track" style="height:4px;"><div class="bar-fill" style="width: ${(t.count / maxCount) * 100}%"></div></div>
       </div>
 
       <div class="theme-tags">
