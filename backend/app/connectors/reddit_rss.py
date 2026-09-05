@@ -37,89 +37,80 @@ class RedditRSSConnector(SourceConnector):
         self.subreddits = subreddits or DEFAULT_SUBREDDITS
         self.user_agent = user_agent
 
-    def collect(self, since: Optional[datetime] = None, limit: Optional[int] = 100, **kwargs) -> List[RawEvidenceItem]:
-        """
-        Fetch posts from the configured subreddits via RSS.
-        """
-        items = []
-        # Coerce None to default, distribute limit across subreddits
-        effective_limit = limit or 100
-        limit_per_sub = max(1, effective_limit // len(self.subreddits))
+    def collect(
+        self,
+        since: Optional[datetime] = None,
+        limit: Optional[int] = None,
+    ) -> List[RawEvidenceItem]:
+        results = []
+        count = limit or 50
 
-        
-        headers = {"User-Agent": self.user_agent}
+        # Create a unique, descriptive User-Agent as per Reddit's API rules to prevent 429s
+        headers = {
+            "User-Agent": "MyntraDiscoveryEngine/1.0.0 (by /u/sakethsawant) - automated data collection for research"
+        }
 
-        for subreddit in self.subreddits:
-            url = f"https://www.reddit.com/r/{subreddit}/new.rss"
-            print(f"[RedditRSS] Fetching {url}")
-            try:
-                response = requests.get(url, headers=headers, timeout=10)
-                response.raise_for_status()
-                
-                # Parse Atom XML
-                root = ET.fromstring(response.content)
-                
-                # Atom namespace
-                ns = {'atom': 'http://www.w3.org/2005/Atom'}
-                
-                entries = root.findall('atom:entry', ns)
-                
-                sub_count = 0
-                for entry in entries:
-                    if sub_count >= limit_per_sub:
-                        break
-                        
-                    title = entry.find('atom:title', ns)
-                    content = entry.find('atom:content', ns)
-                    author = entry.find('atom:author/atom:name', ns)
-                    updated = entry.find('atom:updated', ns)
-                    link = entry.find('atom:link', ns)
-                    id_elem = entry.find('atom:id', ns)
-                    
-                    title_text = title.text if title is not None else ""
-                    content_text = content.text if content is not None else ""
-                    
-                    # Clean up HTML tags from content (basic cleanup since we have cleaner.py later)
-                    import re
-                    content_clean = re.sub('<[^<]+>', '', content_text)
-                    
-                    full_text = f"{title_text}\n\n{content_clean}".strip()
-                    if not full_text:
-                        continue
-                        
-                    url_val = link.attrib.get('href', '') if link is not None else ""
-                    author_name = author.text if author is not None else "unknown"
-                    
-                    try:
-                        # Format: 2026-09-04T12:00:00+00:00
-                        pub_time = datetime.fromisoformat(updated.text.replace('Z', '+00:00')) if updated is not None else datetime.now(timezone.utc)
-                    except ValueError:
-                        pub_time = datetime.now(timezone.utc)
-                        
-                    post_id = id_elem.text if id_elem is not None else url_val
-                    
-                    items.append(
-                        RawEvidenceItem(
-                            source_type=self.source_name,
-                            source_item_id=f"rss_{post_id}",
-                            raw_text=full_text,
-                            content_hash=RawEvidenceItem.make_hash(full_text),
-                            source_metadata={
-                                "author": author_name,
-                                "url": url_val,
-                                "subreddit": subreddit,
-                            },
-                            published_at=pub_time,
-                        )
-                    )
-                    sub_count += 1
-                    
-            except Exception as e:
-                print(f"[RedditRSS] Error fetching from {subreddit}: {e}")
-                
-            time.sleep(2) # Be nice to Reddit's servers
-            
-            if len(items) >= effective_limit:
+        for sub in self.subreddits:
+            if len(results) >= count:
                 break
 
-        return items[:effective_limit]
+            url = f"https://www.reddit.com/r/{sub}/new.json"
+            print(f"[Reddit] Fetching {url}")
+            try:
+                # Add a small delay between requests to be polite
+                time.sleep(2)
+                response = requests.get(url, headers=headers, timeout=10)
+                
+                # Check for 429
+                if response.status_code == 429:
+                    print(f"[Reddit] Error fetching from {sub}: 429 Too Many Requests. Skipping...")
+                    continue
+                    
+                response.raise_for_status()
+                
+                # Parse JSON
+                data = response.json()
+                posts = data.get("data", {}).get("children", [])
+
+                for post_data in posts:
+                    if len(results) >= count:
+                        break
+                        
+                    post = post_data.get("data", {})
+                    post_id = post.get("id")
+                    title = post.get("title", "")
+                    selftext = post.get("selftext", "")
+                    
+                    full_text = f"{title}\n\n{selftext}".strip()
+                    if not full_text:
+                        continue
+
+                    # Published date (created_utc)
+                    created_utc = post.get("created_utc")
+                    published = datetime.fromtimestamp(created_utc, tz=timezone.utc) if created_utc else None
+
+                    if since and published and published < since:
+                        continue
+                        
+                    permalink = post.get("permalink", "")
+                    source_url = f"https://www.reddit.com{permalink}" if permalink else f"https://www.reddit.com/r/{sub}"
+
+                    item = RawEvidenceItem(
+                        source_type=self.source_name,
+                        source_item_id=f"{sub}_{post_id}",
+                        raw_text=full_text,
+                        content_hash=RawEvidenceItem.make_hash(full_text),
+                        source_url=source_url,
+                        published_at=published,
+                        source_metadata={
+                            "subreddit": sub,
+                            "title": title,
+                        },
+                    )
+                    results.append(item)
+
+            except Exception as e:
+                print(f"[Reddit] Error fetching from {sub}: {e}")
+
+        print(f"[reddit] Collected {len(results)} items.")
+        return results

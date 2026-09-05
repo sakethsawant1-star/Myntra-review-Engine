@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import List, Optional
 from .base import SourceConnector, RawEvidenceItem
 
-MYNTRA_APP_ID = "1106596688"  # Myntra Apple App Store ID
+MYNTRA_APP_ID = "907394059"  # Myntra Apple App Store ID
 
 
 class AppleStoreConnector(SourceConnector):

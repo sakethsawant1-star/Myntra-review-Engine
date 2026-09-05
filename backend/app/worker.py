@@ -17,6 +17,7 @@ from backend.app.connectors.google_play import GooglePlayConnector
 from backend.app.connectors.reddit import RedditConnector
 from backend.app.connectors.reddit_rss import RedditRSSConnector
 from backend.app.connectors.youtube import YouTubeConnector
+from backend.app.connectors.quora import QuoraConnector
 from backend.app.pipeline.pipeline import Pipeline
 
 
@@ -34,7 +35,7 @@ def parse_sources(value: Optional[object]) -> List[str]:
         except json.JSONDecodeError:
             value = value.split(",")
     if not value:
-        value = os.environ.get("PIPELINE_SOURCES", "google_play,reddit_rss").split(",")
+        value = os.environ.get("PIPELINE_SOURCES", "google_play,reddit_rss,quora").split(",")
     return list(dict.fromkeys(str(source).strip() for source in value if str(source).strip()))
 
 
@@ -43,6 +44,8 @@ def build_connectors(sources: Iterable[str]):
     normalized = {source.strip().lower() for source in sources}
     connectors = []
 
+    if "quora" in normalized:
+        connectors.append(QuoraConnector(urls=["https://www.quora.com/What-are-the-best-clothes-shopping-apps-in-India"]))
     if "google_play" in normalized:
         connectors.append(GooglePlayConnector())
     if "apple_store" in normalized:
