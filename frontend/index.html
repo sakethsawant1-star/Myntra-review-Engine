@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Myntra Wishlist Discovery Engine</title>
+  <meta name="description" content="AI-powered behavioral research into Myntra's wishlist-to-purchase conversion patterns.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="landing-body">
+  <div class="landing-bg"></div>
+  <div class="landing-grid"></div>
+
+  <main class="landing-content">
+    <div class="landing-badge">
+      <div class="badge-dot"></div>
+      Myntra Graduate Project · Research Engine v2.0
+    </div>
+
+    <div class="landing-logo">M</div>
+
+    <h1 class="landing-title">Wishlist<br><span>Discovery Engine</span></h1>
+
+    <p class="landing-subtitle">
+      An AI-powered behavioral research tool that transforms real user reviews and community discussions into evidence-backed product opportunities — mapping the journey from wishlist intent to purchase conversion.
+    </p>
+
+    <div class="landing-stats">
+      <div class="stat-item">
+        <div class="stat-value accent" id="stat-count">0</div>
+        <div class="stat-label">Reviews Analyzed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">11</div>
+        <div class="stat-label">Discovery Questions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">6</div>
+        <div class="stat-label">User Segments</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Data Sources</div>
+      </div>
+    </div>
+
+    <div class="landing-ctas">
+      <a href="pipeline.html" class="btn-run-main">
+        <div class="btn-run-icon">▶</div>
+        Run Analysis Pipeline
+      </a>
+      <a href="dashboard.html" class="btn-dash-link">
+        View Live Dashboard →
+      </a>
+    </div>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="footer-tag"><i data-feather="shield" style="width:12px;height:12px;"></i> Research-Neutral</div>
+    <div class="footer-tag"><i data-feather="link" style="width:12px;height:12px;"></i> Evidence-Backed</div>
+    <div class="footer-tag"><i data-feather="check-circle" style="width:12px;height:12px;"></i> Span-Validated</div>
+    <div class="footer-tag"><i data-feather="cpu" style="width:12px;height:12px;"></i> Gemini Flash AI</div>
+  </footer>
+
+  <script>
+    feather.replace();
+    function animateCount(el, target, duration) {
+      let v = 0;
+      const step = Math.ceil(target / (duration / 16));
+      const t = setInterval(() => {
+        v = Math.min(v + step, target);
+        el.textContent = v.toLocaleString();
+        if (v >= target) clearInterval(t);
+      }, 16);
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => animateCount(document.getElementById('stat-count'), 1247, 1600), 350);
+    });
+  </script>
+</body>
+</html>

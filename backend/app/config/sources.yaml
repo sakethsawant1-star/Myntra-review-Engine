@@ -1,0 +1,11 @@
+version: "1.0.0"
+
+sources:
+  google_play:
+    enabled: true
+  apple_store:
+    enabled: false
+  reddit_rss:
+    enabled: true
+  youtube:
+    enabled: false

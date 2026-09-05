@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Myntra Wishlist Discovery Engine</title>
+  <meta name="description" content="Behavioral insights dashboard for Myntra's wishlist-to-purchase research engine.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="app-body">
+
+  <!-- Demo Banner -->
+  <div class="demo-banner hidden" id="demo-banner">
+    <i data-feather="alert-triangle" style="width:14px;height:14px;"></i>
+    DEMO MODE — Displaying curated snapshot data from 1,247 analyzed reviews.
+  </div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="sidebar-brand">
+        <div class="brand-m">M</div>
+        <div class="brand-info">
+          <h1>Wishlist Discovery</h1>
+          <div class="brand-ver">Engine v2.0</div>
+        </div>
+      </a>
+      <div class="sidebar-meta">
+        <div class="live-status">
+          <div class="live-dot"></div>
+          <span id="status-label">Live</span>
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle" title="Toggle theme">
+          <i data-feather="sun" style="width:13px;height:13px;" class="icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-section-lbl">Research</span>
+      <ul class="nav-links">
+        <li><a href="#overview" class="active" id="nav-overview"><i data-feather="activity"></i> Overview & Funnel</a></li>
+        <li><a href="#questions" id="nav-questions"><i data-feather="help-circle"></i> Discovery Questions</a></li>
+        <li><a href="#behaviours" id="nav-behaviours"><i data-feather="pie-chart"></i> Behaviour Explorer</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-section-lbl">Insights</span>
+      <ul class="nav-links">
+        <li><a href="#segments" id="nav-segments"><i data-feather="users"></i> Candidate Segments</a></li>
+        <li><a href="#opportunities" id="nav-opportunities"><i data-feather="target"></i> Opportunity Board</a></li>
+        <li><a href="#evidence" id="nav-evidence"><i data-feather="database"></i> Evidence Library</a></li>
+        <li><a href="#summary" id="nav-summary"><i data-feather="file-text"></i> Summary Report</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-section-lbl">System</span>
+      <ul class="nav-links">
+        <li><a href="#pipeline" id="nav-pipeline"><i data-feather="cpu"></i> Pipeline Runs</a></li>
+        <li><a href="#methodology" id="nav-methodology"><i data-feather="info"></i> Methodology</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="pipeline.html" class="btn-new-pipeline">
+        <i data-feather="play" style="width:14px;height:14px;"></i>
+        Run New Analysis
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="active-section">
+      <div class="section-header">
+        <h2 class="section-title">Overview & Funnel</h2>
+        <p class="section-sub">High-level view of wishlist-to-purchase intent and conversion blockers across the current annotated evidence.</p>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-lbl">Total Evidence</div>
+          <div class="metric-val" id="val-total">—</div>
+          <div class="metric-sub">Annotated items</div>
+        </div>
+        <div class="metric-card hl">
+          <div class="metric-lbl">High Intent Blocked</div>
+          <div class="metric-val p" id="val-blocked">—</div>
+          <div class="metric-sub">Of high-intent users have friction</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-lbl">Discovery Questions</div>
+          <div class="metric-val" id="val-questions">11</div>
+        <div class="metric-sub" id="val-questions-sub">coverage status</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-lbl">Top Friction</div>
+          <div class="metric-val" style="font-size:18px;" id="val-topfriction">—</div>
+          <div class="metric-sub" id="val-topfriction-count">mentions</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wishlist → Purchase Intent → Conversion Funnel</div>
+        <div id="funnel-container"></div>
+      </div>
+
+      <div style="margin-top:16px;" class="card">
+        <div class="card-title">Source Distribution</div>
+        <div id="source-chart"></div>
+      </div>
+    </section>
+
+    <!-- DISCOVERY QUESTIONS -->
+    <section id="questions">
+      <div class="section-header">
+        <h2 class="section-title">Discovery Questions</h2>
+        <p class="section-sub">How the evidence pipeline answers the 11 core research questions from the project brief.</p>
+      </div>
+      <div class="q-grid" id="questions-container"></div>
+    </section>
+
+    <!-- BEHAVIOURS -->
+    <section id="behaviours">
+      <div class="section-header">
+        <h2 class="section-title">Behaviour Explorer</h2>
+        <p class="section-sub">Distributions across user intent, post-save actions, off-platform research, and friction types.</p>
+      </div>
+      <div class="db-grid" style="margin-bottom:14px;">
+        <div class="card"><div class="card-title">Reason for Saving</div><div class="bar-chart" id="chart-reason"></div></div>
+        <div class="card"><div class="card-title">Underlying Intent</div><div class="bar-chart" id="chart-intent"></div></div>
+        <div class="card"><div class="card-title">Purchase Stage</div><div class="bar-chart" id="chart-stage"></div></div>
+      </div>
+      <div class="db-grid" style="margin-bottom:14px;">
+        <div class="card"><div class="card-title">Action After Saving</div><div class="bar-chart" id="chart-action"></div></div>
+        <div class="card"><div class="card-title">Off-Platform Research</div><div class="bar-chart" id="chart-research"></div></div>
+        <div class="card"><div class="card-title">Workarounds Used</div><div class="bar-chart" id="chart-workaround"></div></div>
+      </div>
+      <div class="card full"><div class="card-title">Friction & Uncertainty Type Distribution</div><div class="bar-chart" id="chart-friction"></div></div>
+    </section>
+
+    <!-- SEGMENTS -->
+    <section id="segments">
+      <div class="section-header">
+        <h2 class="section-title">Candidate Segments</h2>
+      <p class="section-sub">Rule-based behavioral clusters discovered through AI annotation of the current evidence.</p>
+      </div>
+      <div class="segs-grid" id="segments-container"></div>
+    </section>
+
+    <!-- OPPORTUNITIES -->
+    <section id="opportunities">
+      <div class="section-header">
+        <h2 class="section-title">Opportunity Board</h2>
+        <p class="section-sub">Behavioral hypotheses ranked by 7 evidence factors. Click any score to see the full breakdown.</p>
+      </div>
+      <div class="opps-list" id="opportunities-container"></div>
+    </section>
+
+    <!-- EVIDENCE -->
+    <section id="evidence">
+      <div class="section-header">
+        <h2 class="section-title">Evidence Library</h2>
+        <p class="section-sub">Raw source text with AI-extracted behavioral annotations and supporting spans.</p>
+      </div>
+      <div class="ev-controls">
+        <div class="filter-pills" id="intent-pills">
+          <button class="f-pill on" data-intent="">All</button>
+          <button class="f-pill" data-intent="high_purchase_intent">High Intent</button>
+          <button class="f-pill" data-intent="price_monitoring">Price Monitoring</button>
+          <button class="f-pill" data-intent="active_comparison">Comparison</button>
+          <button class="f-pill" data-intent="passive_bookmarking">Passive</button>
+          <button class="f-pill" data-intent="delayed_purchase_intent">Delayed</button>
+        </div>
+        <select class="f-select" id="filter-source">
+          <option value="">All Sources</option>
+          <option value="google_play">Google Play</option>
+          <option value="reddit_rss">Reddit RSS</option>
+          <option value="youtube">YouTube</option>
+        </select>
+      </div>
+      <div class="ev-grid" id="evidence-container"></div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section id="summary">
+      <div class="section-header">
+        <h2 class="section-title">Summary Report</h2>
+        <p class="section-sub">Auto-generated executive summary of all key findings from the pipeline run.</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-header">
+          <span style="font-size:13px;color:var(--text-muted);">Ready to generate</span>
+          <button class="btn-gen-summary" id="btn-gen-summary">
+            <i data-feather="zap" style="width:15px;height:15px;"></i>
+            Generate AI Summary
+          </button>
+        </div>
+        <div class="summary-body" id="summary-body">
+          <p style="color:var(--text-muted);">Click "Generate AI Summary" to create an executive briefing from all evidence in the current dataset.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIPELINE -->
+    <section id="pipeline">
+      <div class="section-header">
+        <h2 class="section-title">Pipeline Orchestration</h2>
+        <p class="section-sub">Trigger fresh data collection and AI analysis runs.</p>
+      </div>
+      <div class="run-card">
+        <div class="run-form-row">
+          <div class="run-form-group">
+            <label class="run-label">Data Scope</label>
+            <select class="run-select" id="run-scope">
+              <option value="fresh_sample">Fresh Sample (Fast)</option>
+              <option value="prepared_corpus">Full Corpus (Slow)</option>
+            </select>
+          </div>
+          <div class="run-form-group">
+            <label class="run-label">Item Cap</label>
+            <input type="number" class="run-input" id="run-limit" value="40" max="200">
+          </div>
+          <button class="btn-start-run" id="btn-trigger">Start Run</button>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);">Or <a href="pipeline.html" style="color:var(--primary);">watch the animated pipeline simulation →</a></p>
+      </div>
+      <div class="hidden" id="run-status">
+        <div id="run-stages"></div>
+      </div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section id="methodology">
+      <div class="section-header">
+        <h2 class="section-title">Methodology & Limitations</h2>
+        <p class="section-sub">Research design, data provenance, and known constraints.</p>
+      </div>
+      <div class="card">
+        <div class="meth-section">
+          <h3>Data Collection</h3>
+          <p>Evidence is collected from three sources: <span class="meth-tag">Google Play Store</span> <span class="meth-tag">Reddit RSS (no API required)</span> <span class="meth-tag">YouTube comments</span></p>
+          <p>Google Play reviews are fetched via the public-facing scraper (no API key required). Reddit uses public Atom/RSS feeds — subreddits include r/indianfashion, r/Myntra, r/frugalfemalefashion. Reviews are collected in en-IN locale and filtered for keyword relevance before entering the AI stage.</p>
+        </div>
+        <div class="meth-section">
+          <h3>AI Annotation (Gemini Flash)</h3>
+          <p>Each evidence item is sent to Gemini Flash with a 28-dimension behavioral schema (AIAnnotation). The schema captures wishlist intent, frictions (type + severity 1-3), purchase stage, off-platform behavior, and supporting exact quotes (spans). All extracted spans are validated against the source text.</p>
+          <ul>
+            <li>Research-neutral: the model is instructed not to assume any friction is the "expected answer"</li>
+            <li>Confidence calibration: 3 = explicitly stated, 2 = implied, 1 = weak inference</li>
+            <li>Contradictions are explicitly noted in <code>contradictory_signal</code></li>
+          </ul>
+        </div>
+        <div class="meth-section">
+          <h3>7-Factor Opportunity Scoring</h3>
+          <p>Each behavioral hypothesis is scored on 7 equally-weighted factors, each expressed as a 0.0–1.0 score:</p>
+          <ul>
+            <li><strong>Frequency</strong>: Volume of evidence items mentioning this friction</li>
+            <li><strong>Severity</strong>: Average friction severity (1-3 scale) normalized to 0–1</li>
+            <li><strong>Purchase Intent</strong>: Co-occurrence rate with high_purchase_intent signals</li>
+            <li><strong>Conversion Relevance</strong>: Direct link between friction and conversion failure</li>
+            <li><strong>Source Convergence</strong>: Whether multiple data sources signal the same friction</li>
+            <li><strong>Segment Concentration</strong>: How concentrated this friction is within a specific segment</li>
+            <li><strong>Evidence Confidence</strong>: Average AI confidence score (1-3, normalized)</li>
+          </ul>
+        </div>
+        <div class="meth-section">
+          <h3>Known Limitations</h3>
+          <ul>
+            <li>Public reviews skew toward negative experiences (negativity bias in review corpora)</li>
+            <li>Reddit sample may over-represent active online communities, not typical Myntra shoppers</li>
+            <li>Gemini Flash free tier limits batch throughput — large corpora require overnight runs</li>
+            <li>Demographic inference is explicitly prohibited — no gender, age, or income assumed</li>
+            <li>Evidence is observational, not causal — correlations do not imply feature recommendations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Drawer -->
+  <div class="drawer-overlay hidden" id="drawer">
+    <div class="drawer-panel">
+      <div class="drawer-hdr">
+        <div class="drawer-hdr-title" id="drawer-title">Details</div>
+        <button class="drawer-close" id="btn-close-drawer"><i data-feather="x" style="width:15px;height:15px;"></i></button>
+      </div>
+      <div class="drawer-content" id="drawer-body"></div>
+    </div>
+  </div>
+
+  <!-- Chat FAB -->
+  <button class="chat-fab" id="chat-fab" title="Ask AI about this data">
+    <i data-feather="message-circle"></i>
+  </button>
+
+  <!-- Chat Panel -->
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-hdr">
+      <div class="chat-avatar">AI</div>
+      <div class="chat-hdr-text">
+        <h4>Dashboard Assistant</h4>
+        <div class="chat-hdr-status"><div class="live-dot" style="width:5px;height:5px;"></div> Powered by Gemini</div>
+      </div>
+      <button class="chat-close" id="chat-close"><i data-feather="x" style="width:14px;height:14px;"></i></button>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-bubble bot">
+        Hi! I'm your dashboard assistant. I can answer questions about the Myntra behavioral data shown here — segments, frictions, opportunities, and more. What would you like to know?
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chat-suggestions">
+      <button class="sugg-pill" data-q="What is the biggest friction?">Biggest friction?</button>
+      <button class="sugg-pill" data-q="What is the top opportunity?">Top opportunity?</button>
+      <button class="sugg-pill" data-q="What percentage converted?">Conversion rate?</button>
+      <button class="sugg-pill" data-q="Give me a summary">Summarise findings</button>
+    </div>
+
+    <div class="chat-footer">
+      <textarea class="chat-input" id="chat-input" placeholder="Ask about the data..." rows="1"></textarea>
+      <button class="chat-send" id="chat-send">
+        <i data-feather="send"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="config.js" onerror="console.warn('config.js not found')"></script>
+  <script src="demo-data.js"></script>
+  <script src="app.js"></script>
+  <script>feather.replace();</script>
+</body>
+</html>

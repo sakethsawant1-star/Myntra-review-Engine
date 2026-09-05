@@ -1,0 +1,21 @@
+version: "1.0.0"
+
+frictions:
+  - fit_uncertainty
+  - size_uncertainty
+  - styling_coordination_uncertainty
+  - product_quality_uncertainty
+  - review_trust_uncertainty
+  - product_information_gap
+  - occasion_suitability
+  - social_validation
+  - comparison_difficulty
+  - availability_stock_concern
+  - delivery_timing_concern
+  - price_related_behaviour
+  - return_exchange_concern
+  - choice_overload
+  - forgetting_low_salience
+  - other
+  - emerging_theme
+  - unclear

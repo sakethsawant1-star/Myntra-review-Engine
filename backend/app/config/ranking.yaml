@@ -1,0 +1,12 @@
+# Seven-factor opportunity ranking weights.
+# Weights must sum to 1.0.
+# Changing these values changes scores without code changes.
+
+weights:
+  frequency: 0.15            # How often this friction/behaviour appears in corpus
+  severity: 0.15             # How severely it blocks purchase (from annotation severity)
+  purchase_intent: 0.20      # How close is the user to buying? (from intent_strength + stage)
+  conversion_relevance: 0.20 # How directly does this affect wishlist-to-purchase conversion?
+  source_convergence: 0.10   # Does this show up across multiple source types?
+  segment_concentration: 0.10 # Is this concentrated in a specific behavioral segment?
+  evidence_confidence: 0.10  # How explicit/clear is the evidence?

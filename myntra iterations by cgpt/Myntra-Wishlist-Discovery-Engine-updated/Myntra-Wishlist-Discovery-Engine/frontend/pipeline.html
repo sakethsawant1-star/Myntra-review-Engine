@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline Preview — Myntra Discovery Engine</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="pipeline-body">
+
+  <header class="pipeline-header">
+    <div class="pipe-logo">M</div>
+    <div>
+      <div class="pipe-header-title">Wishlist Discovery Engine</div>
+      <div class="pipe-header-sub">GitHub Actions worker · Preview</div>
+    </div>
+  </header>
+
+  <div class="pipeline-layout">
+    <!-- Steps sidebar -->
+    <div class="pipeline-steps">
+      <div class="steps-title">Pipeline Steps</div>
+
+      <div class="step-item waiting" id="step-0">
+        <div class="step-icon" id="step-icon-0"><i data-feather="download-cloud" style="width:14px;height:14px;"></i></div>
+        <div class="step-text">
+          <div class="step-name">Data Collection</div>
+          <div class="step-desc">Google Play & Reddit RSS</div>
+          <div class="step-status-label" id="step-label-0">Queued</div>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item waiting" id="step-1">
+        <div class="step-icon" id="step-icon-1"><i data-feather="filter" style="width:14px;height:14px;"></i></div>
+        <div class="step-text">
+          <div class="step-name">Preprocessing</div>
+          <div class="step-desc">Dedup, language filter, noise</div>
+          <div class="step-status-label" id="step-label-1">Queued</div>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item waiting" id="step-2">
+        <div class="step-icon" id="step-icon-2"><i data-feather="zap" style="width:14px;height:14px;"></i></div>
+        <div class="step-text">
+          <div class="step-name">Gemini AI Analysis</div>
+          <div class="step-desc">28-dimension annotation</div>
+          <div class="step-status-label" id="step-label-2">Queued</div>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+
+      <div class="step-item waiting" id="step-3">
+        <div class="step-icon" id="step-icon-3"><i data-feather="bar-chart-2" style="width:14px;height:14px;"></i></div>
+        <div class="step-text">
+          <div class="step-name">Scoring & Ranking</div>
+          <div class="step-desc">7-factor opportunity rank</div>
+          <div class="step-status-label" id="step-label-3">Queued</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal panel -->
+    <div class="pipeline-terminal-area">
+      <div class="terminal-chrome">
+        <div class="terminal-dots">
+          <div class="t-dot r"></div>
+          <div class="t-dot y"></div>
+          <div class="t-dot g"></div>
+        </div>
+        <div class="terminal-filename">discovery-engine — pipeline.py</div>
+      </div>
+
+      <div class="terminal-box" id="terminal-box">
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-muted">─────────────────────────────────────────</span></span>
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-primary">  Myntra Wishlist Discovery Engine v2.0</span></span>
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-muted">─────────────────────────────────────────</span></span>
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-normal">  Loading configuration from .env...</span></span>
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-success">  ✓ DATABASE_URL        → Supabase (pooler)</span></span>
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-success">  ✓ GEMINI_API_KEY      → configured (not displayed)</span></span>
+        <span class="log-line"><span class="ts">[00:00]</span> <span class="lg-success">  ✓ GEMINI_MODEL        → gemini-flash-latest</span></span>
+        <span class="log-line"><span class="ts">[00:01]</span> <span class="lg-normal">  Connectors: [google_play, reddit_rss]</span></span>
+        <span class="term-cursor" id="cursor"></span>
+      </div>
+
+      <!-- Complete section -->
+      <div class="pipe-complete" id="pipe-complete">
+        <div class="pipe-complete-inner">
+          <h3>✓ Preview Complete</h3>
+          <p>This screen previews the pipeline stages. Actual collection and AI annotation run in GitHub Actions and write results to Supabase.</p>
+          <div class="pipe-stats">
+            <div class="pipe-stat">
+              <div class="pipe-stat-val">192</div>
+              <div class="pipe-stat-lbl">Items Annotated</div>
+            </div>
+            <div class="pipe-stat">
+              <div class="pipe-stat-val">94.2%</div>
+              <div class="pipe-stat-lbl">Span Validated</div>
+            </div>
+            <div class="pipe-stat">
+              <div class="pipe-stat-val">6</div>
+              <div class="pipe-stat-lbl">Segments Found</div>
+            </div>
+            <div class="pipe-stat">
+              <div class="pipe-stat-val">87</div>
+              <div class="pipe-stat-lbl">Top Score / 100</div>
+            </div>
+          </div>
+          <a href="dashboard.html" class="btn-view-dashboard">
+            <i data-feather="bar-chart-2" style="width:18px;height:18px;"></i>
+            View Full Dashboard →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    feather.replace();
+
+    const terminal = document.getElementById('terminal-box');
+    const cursor = document.getElementById('cursor');
+
+    const STEPS = [
+      {
+        name: 'Data Collection',
+        label: 'Running',
+        logs: [
+          { delay: 400, ts: '00:02', cls: 'lg-info', text: '▶ STEP 1 — Data Collection' },
+          { delay: 600, ts: '00:02', cls: 'lg-normal', text: '  Connecting to Google Play Store (com.myntra.android)...' },
+          { delay: 900, ts: '00:03', cls: 'lg-success', text: '  ✓ Connected. Fetching en-IN reviews (batch 1/5)...' },
+          { delay: 1300, ts: '00:04', cls: 'lg-normal', text: '  Fetched 50 reviews  [1-5★, sorted: newest]' },
+          { delay: 1700, ts: '00:05', cls: 'lg-normal', text: '  Fetching reviews (batch 2/5)...' },
+          { delay: 2100, ts: '00:06', cls: 'lg-normal', text: '  Fetched 50 reviews  [1-5★, sorted: newest]' },
+          { delay: 2600, ts: '00:07', cls: 'lg-normal', text: '  Fetching reviews (batch 3/5)...' },
+          { delay: 3100, ts: '00:08', cls: 'lg-normal', text: '  Fetched 100 reviews' },
+          { delay: 3600, ts: '00:09', cls: 'lg-success', text: '  ✓ google_play: 200 raw items collected.' },
+          { delay: 4000, ts: '00:09', cls: 'lg-info', text: '  Fetching Reddit RSS feeds (no API key required)...' },
+          { delay: 4500, ts: '00:10', cls: 'lg-normal', text: '  → r/indianfashion   [hot.rss]   42 posts' },
+          { delay: 5000, ts: '00:11', cls: 'lg-normal', text: '  → r/Myntra          [new.rss]   28 posts' },
+          { delay: 5500, ts: '00:12', cls: 'lg-normal', text: '  → r/frugalfemalefashion  [hot.rss]  17 posts' },
+          { delay: 6000, ts: '00:13', cls: 'lg-success', text: '  ✓ reddit_rss: 87 posts collected.' },
+          { delay: 6300, ts: '00:13', cls: 'lg-success', text: '  ✓ Step 1 complete. Total raw corpus: 287 items.' },
+        ]
+      },
+      {
+        name: 'Preprocessing',
+        label: 'Running',
+        logs: [
+          { delay: 200, ts: '00:14', cls: 'lg-info', text: '▶ STEP 2 — Preprocessing & Deduplication' },
+          { delay: 600, ts: '00:15', cls: 'lg-normal', text: '  Language detection (fastText model)...' },
+          { delay: 1100, ts: '00:16', cls: 'lg-warn', text: '  ⚠ Filtered 48 non-English items (hi, ur, ta detected)' },
+          { delay: 1500, ts: '00:17', cls: 'lg-normal', text: '  Computing canonical_hash (SHA-256 of normalized text)...' },
+          { delay: 2000, ts: '00:18', cls: 'lg-warn', text: '  ⚠ Removed 32 duplicate entries (exact hash match)' },
+          { delay: 2500, ts: '00:19', cls: 'lg-normal', text: '  Noise/spam filter: checking length < 20 chars, all-caps...' },
+          { delay: 3000, ts: '00:20', cls: 'lg-warn', text: '  ⚠ Dropped 15 noise/spam items' },
+          { delay: 3500, ts: '00:20', cls: 'lg-normal', text: '  Keyword relevance filter (wishlist, save, buy_later...)...' },
+          { delay: 4000, ts: '00:21', cls: 'lg-warn', text: '  ⚠ Rejected 0 items (all passed relevance threshold)' },
+          { delay: 4400, ts: '00:22', cls: 'lg-success', text: '  ✓ Step 2 complete. 192 candidates ready for AI.' },
+        ]
+      },
+      {
+        name: 'Gemini AI Analysis',
+        label: 'Running',
+        logs: [
+          { delay: 200,  ts: '00:23', cls: 'lg-info',    text: '▶ STEP 3 — Gemini AI Analysis (28-dimension schema)' },
+          { delay: 600,  ts: '00:24', cls: 'lg-normal',  text: '  Loading schema: AIAnnotation (wishlist_intent, frictions, ...)' },
+          { delay: 1000, ts: '00:24', cls: 'lg-normal',  text: '  Rate limit: 15 req/min (free tier). Batching accordingly.' },
+          { delay: 1600, ts: '00:25', cls: 'lg-normal',  text: '  Batch 1/6 → 32 items → Gemini Flash...' },
+          { delay: 3200, ts: '00:28', cls: 'lg-success', text: '  ✓ Batch 1: 32/32 annotated. Spans validated.' },
+          { delay: 3800, ts: '00:29', cls: 'lg-normal',  text: '  Batch 2/6 → 32 items → Gemini Flash...' },
+          { delay: 5500, ts: '00:32', cls: 'lg-success', text: '  ✓ Batch 2: 31/32 annotated (1 confidence too low, skipped).' },
+          { delay: 6100, ts: '00:33', cls: 'lg-normal',  text: '  Batch 3/6 → 32 items → Gemini Flash...' },
+          { delay: 7700, ts: '00:36', cls: 'lg-success', text: '  ✓ Batch 3: 32/32 annotated.' },
+          { delay: 8300, ts: '00:37', cls: 'lg-normal',  text: '  Batch 4/6 → 32 items → Gemini Flash...' },
+          { delay: 9900, ts: '00:40', cls: 'lg-success', text: '  ✓ Batch 4: 32/32 annotated.' },
+          { delay: 10500,ts: '00:41', cls: 'lg-normal',  text: '  Batch 5/6 → 32 items → Gemini Flash...' },
+          { delay: 12100,ts: '00:44', cls: 'lg-success', text: '  ✓ Batch 5: 31/32 annotated.' },
+          { delay: 12700,ts: '00:45', cls: 'lg-normal',  text: '  Batch 6/6 → 20 items → Gemini Flash...' },
+          { delay: 14200,ts: '00:48', cls: 'lg-success', text: '  ✓ Batch 6: 20/20 annotated.' },
+          { delay: 14700,ts: '00:49', cls: 'lg-normal',  text: '  Running support-span validation...' },
+          { delay: 15200,ts: '00:50', cls: 'lg-success', text: '  ✓ Span validation: 181/192 valid (94.2% rate).' },
+          { delay: 15700,ts: '00:51', cls: 'lg-success', text: '  ✓ Step 3 complete. AI success: 178 | failure: 14.' },
+        ]
+      },
+      {
+        name: 'Scoring & Ranking',
+        label: 'Running',
+        logs: [
+          { delay: 200,  ts: '00:52', cls: 'lg-info',    text: '▶ STEP 4 — 7-Factor Opportunity Scoring' },
+          { delay: 600,  ts: '00:53', cls: 'lg-normal',  text: '  Factor 1/7 : Frequency  (evidence volume per friction)' },
+          { delay: 1000, ts: '00:53', cls: 'lg-success', text: '  ✓ fit_uncertainty: 384 mentions → score 0.91' },
+          { delay: 1400, ts: '00:54', cls: 'lg-normal',  text: '  Factor 2/7 : Severity  (avg 1-3 friction scale)' },
+          { delay: 1800, ts: '00:54', cls: 'lg-success', text: '  ✓ availability_stock_concern: avg severity 2.9 → 0.97' },
+          { delay: 2200, ts: '00:55', cls: 'lg-normal',  text: '  Factor 3/7 : Purchase Intent Signal' },
+          { delay: 2600, ts: '00:55', cls: 'lg-success', text: '  ✓ high_purchase_intent co-occurrence: 68%' },
+          { delay: 3000, ts: '00:56', cls: 'lg-normal',  text: '  Factor 4/7 : Conversion Relevance' },
+          { delay: 3400, ts: '00:56', cls: 'lg-success', text: '  ✓ Direct conversion-block evidence: 0.89' },
+          { delay: 3800, ts: '00:57', cls: 'lg-normal',  text: '  Factor 5/7 : Source Convergence' },
+          { delay: 4200, ts: '00:57', cls: 'lg-success', text: '  ✓ Google Play + Reddit both signal fit_uncertainty' },
+          { delay: 4600, ts: '00:58', cls: 'lg-normal',  text: '  Factor 6/7 : Segment Concentration' },
+          { delay: 5000, ts: '00:58', cls: 'lg-success', text: '  ✓ high_intent_blocked: 28.2% of total corpus' },
+          { delay: 5400, ts: '00:59', cls: 'lg-normal',  text: '  Factor 7/7 : Evidence Confidence' },
+          { delay: 5800, ts: '00:59', cls: 'lg-success', text: '  ✓ Avg confidence: 2.6 / 3.0' },
+          { delay: 6300, ts: '01:00', cls: 'lg-normal',  text: '  Generating discovery question coverage report...' },
+          { delay: 6800, ts: '01:01', cls: 'lg-success', text: '  ✓ 8/11 questions fully covered, 3/11 partial.' },
+          { delay: 7300, ts: '01:02', cls: 'lg-success', text: '  ✓ Step 4 complete. 6 segments ranked. Top score: 87/100.' },
+          { delay: 7800, ts: '01:03', cls: 'lg-muted',   text: '─────────────────────────────────────────' },
+          { delay: 8200, ts: '01:03', cls: 'lg-success', text: '  ✓ Pipeline run complete. Results written to Supabase.' },
+          { delay: 8600, ts: '01:03', cls: 'lg-primary', text: '  Dashboard is ready →' },
+        ]
+      }
+    ];
+
+    let globalTs = 0;
+
+    function addLog(ts, cls, text) {
+      cursor.remove();
+      const line = document.createElement('span');
+      line.className = 'log-line';
+      line.innerHTML = `<span class="ts">[${ts}]</span> <span class="${cls}">${text}</span>`;
+      terminal.appendChild(line);
+      terminal.appendChild(cursor);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function setStepState(idx, state) {
+      const el = document.getElementById(`step-${idx}`);
+      const lbl = document.getElementById(`step-label-${idx}`);
+      el.className = `step-item ${state}`;
+      if (state === 'active') lbl.textContent = 'Running...';
+      if (state === 'done') lbl.textContent = '✓ Complete';
+      if (state === 'waiting') lbl.textContent = 'Queued';
+    }
+
+    function runStep(stepIdx) {
+      return new Promise(resolve => {
+        setStepState(stepIdx, 'active');
+        const step = STEPS[stepIdx];
+        let lastDelay = 0;
+
+        step.logs.forEach(log => {
+          setTimeout(() => {
+            addLog(log.ts, log.cls, log.text);
+          }, log.delay);
+          lastDelay = Math.max(lastDelay, log.delay);
+        });
+
+        setTimeout(() => {
+          setStepState(stepIdx, 'done');
+          resolve();
+        }, lastDelay + 600);
+      });
+    }
+
+    async function runPipeline() {
+      // Small initial delay
+      await new Promise(r => setTimeout(r, 1200));
+
+      for (let i = 0; i < STEPS.length; i++) {
+        await runStep(i);
+        await new Promise(r => setTimeout(r, 500));
+      }
+
+      // Show completion
+      cursor.remove();
+      setTimeout(() => {
+        const completeEl = document.getElementById('pipe-complete');
+        completeEl.classList.add('visible');
+        feather.replace();
+      }, 600);
+    }
+
+    // Start the pipeline
+    document.addEventListener('DOMContentLoaded', () => {
+      feather.replace();
+      runPipeline();
+    });
+  </script>
+</body>
+</html>

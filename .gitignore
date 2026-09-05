@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+.next/
+out/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env/
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Test / Build artifacts
+.pytest_cache/
+frontend/dist/
+*.log
+
+# Local screenshot/test artifacts
+work/
