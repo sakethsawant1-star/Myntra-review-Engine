@@ -1,0 +1,27 @@
+﻿2026-09-05T06:38:22.9177585Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-05T06:38:22.9180536Z ##[group]Run actions/setup-python@v5
+2026-09-05T06:38:22.9181089Z with:
+2026-09-05T06:38:22.9181499Z   python-version: 3.12
+2026-09-05T06:38:22.9181957Z   cache: pip
+2026-09-05T06:38:22.9182418Z   cache-dependency-path: requirements.txt
+2026-09-05T06:38:22.9183034Z   check-latest: false
+2026-09-05T06:38:22.9186955Z   token: ***
+2026-09-05T06:38:22.9187399Z   update-environment: true
+2026-09-05T06:38:22.9187900Z   allow-prereleases: false
+2026-09-05T06:38:22.9188390Z   freethreaded: false
+2026-09-05T06:38:22.9188821Z env:
+2026-09-05T06:38:22.9189218Z   DATABASE_URL: 
+2026-09-05T06:38:22.9189648Z   GEMINI_API_KEY: 
+2026-09-05T06:38:22.9190095Z   GEMINI_MODEL: gemini-1.5-flash
+2026-09-05T06:38:22.9190663Z   PIPELINE_SCOPE: fresh_sample
+2026-09-05T06:38:22.9191165Z   PIPELINE_CAP: 40
+2026-09-05T06:38:22.9191642Z   PIPELINE_SOURCES: google_play,reddit_rss
+2026-09-05T06:38:22.9192195Z ##[endgroup]
+2026-09-05T06:38:23.0565889Z ##[group]Installed versions
+2026-09-05T06:38:23.0688948Z (node:2186) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-05T06:38:23.0692019Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-05T06:38:23.0693849Z Successfully set up CPython (3.12.14)
+2026-09-05T06:38:23.0695802Z ##[endgroup]
+2026-09-05T06:38:23.1012766Z [command]/opt/hostedtoolcache/Python/3.12.14/x64/bin/pip cache dir
+2026-09-05T06:38:24.3781087Z /home/runner/.cache/pip
+2026-09-05T06:38:24.6535841Z pip cache is not found

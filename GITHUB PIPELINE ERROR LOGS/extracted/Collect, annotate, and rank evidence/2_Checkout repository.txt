@@ -1,0 +1,81 @@
+﻿2026-09-05T06:38:22.0239590Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-09-05T06:38:22.0249021Z ##[group]Run actions/checkout@v4
+2026-09-05T06:38:22.0249902Z with:
+2026-09-05T06:38:22.0250435Z   repository: sakethsawant1-star/Myntra-review-Engine
+2026-09-05T06:38:22.0254598Z   token: ***
+2026-09-05T06:38:22.0255042Z   ssh-strict: true
+2026-09-05T06:38:22.0255485Z   ssh-user: git
+2026-09-05T06:38:22.0255923Z   persist-credentials: true
+2026-09-05T06:38:22.0256446Z   clean: true
+2026-09-05T06:38:22.0256890Z   sparse-checkout-cone-mode: true
+2026-09-05T06:38:22.0257421Z   fetch-depth: 1
+2026-09-05T06:38:22.0257852Z   fetch-tags: false
+2026-09-05T06:38:22.0258292Z   show-progress: true
+2026-09-05T06:38:22.0258738Z   lfs: false
+2026-09-05T06:38:22.0259147Z   submodules: false
+2026-09-05T06:38:22.0259640Z   set-safe-directory: true
+2026-09-05T06:38:22.0260153Z   allow-unsafe-pr-checkout: false
+2026-09-05T06:38:22.0260941Z env:
+2026-09-05T06:38:22.0261357Z   DATABASE_URL: 
+2026-09-05T06:38:22.0261785Z   GEMINI_API_KEY: 
+2026-09-05T06:38:22.0262233Z   GEMINI_MODEL: gemini-1.5-flash
+2026-09-05T06:38:22.0262783Z   PIPELINE_SCOPE: fresh_sample
+2026-09-05T06:38:22.0263292Z   PIPELINE_CAP: 40
+2026-09-05T06:38:22.0263998Z   PIPELINE_SOURCES: google_play,reddit_rss
+2026-09-05T06:38:22.0264568Z ##[endgroup]
+2026-09-05T06:38:22.1300344Z Syncing repository: sakethsawant1-star/Myntra-review-Engine
+2026-09-05T06:38:22.1303138Z ##[group]Getting Git version info
+2026-09-05T06:38:22.1304751Z Working directory is '/home/runner/work/Myntra-review-Engine/Myntra-review-Engine'
+2026-09-05T06:38:22.1306642Z [command]/usr/bin/git version
+2026-09-05T06:38:22.1391154Z git version 2.55.0
+2026-09-05T06:38:22.1435167Z ##[endgroup]
+2026-09-05T06:38:22.1450261Z Temporarily overriding HOME='/home/runner/work/_temp/eeda2450-89ea-4853-a98f-09066c789bbf' before making global git config changes
+2026-09-05T06:38:22.1453300Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-05T06:38:22.1457900Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Myntra-review-Engine/Myntra-review-Engine
+2026-09-05T06:38:22.1517292Z Deleting the contents of '/home/runner/work/Myntra-review-Engine/Myntra-review-Engine'
+2026-09-05T06:38:22.1521619Z ##[group]Initializing the repository
+2026-09-05T06:38:22.1528153Z [command]/usr/bin/git init /home/runner/work/Myntra-review-Engine/Myntra-review-Engine
+2026-09-05T06:38:22.1670065Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-05T06:38:22.1672058Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-05T06:38:22.1674103Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-05T06:38:22.1675527Z hint: call:
+2026-09-05T06:38:22.1676418Z hint:
+2026-09-05T06:38:22.1677384Z hint: 	git config --global init.defaultBranch <name>
+2026-09-05T06:38:22.1678578Z hint:
+2026-09-05T06:38:22.1679630Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-05T06:38:22.1681304Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-05T06:38:22.1682612Z hint:
+2026-09-05T06:38:22.1683328Z hint: 	git branch -m <name>
+2026-09-05T06:38:22.1684431Z hint:
+2026-09-05T06:38:22.1685515Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-05T06:38:22.1687414Z Initialized empty Git repository in /home/runner/work/Myntra-review-Engine/Myntra-review-Engine/.git/
+2026-09-05T06:38:22.1696319Z [command]/usr/bin/git remote add origin https://github.com/sakethsawant1-star/Myntra-review-Engine
+2026-09-05T06:38:22.1786272Z ##[endgroup]
+2026-09-05T06:38:22.1787158Z ##[group]Disabling automatic garbage collection
+2026-09-05T06:38:22.1792019Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-05T06:38:22.1827190Z ##[endgroup]
+2026-09-05T06:38:22.1828227Z ##[group]Setting up auth
+2026-09-05T06:38:22.1838864Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-05T06:38:22.1876301Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-05T06:38:22.2309429Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-05T06:38:22.2351864Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-05T06:38:22.2601681Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-05T06:38:22.2641171Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-05T06:38:22.2870535Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-05T06:38:22.2910756Z ##[endgroup]
+2026-09-05T06:38:22.2911777Z ##[group]Fetching the repository
+2026-09-05T06:38:22.2921409Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bddb8420a69db29b835c05826d7f9d02a870545a:refs/remotes/origin/main
+2026-09-05T06:38:22.8263233Z From https://github.com/sakethsawant1-star/Myntra-review-Engine
+2026-09-05T06:38:22.8265224Z  * [new ref]         bddb8420a69db29b835c05826d7f9d02a870545a -> origin/main
+2026-09-05T06:38:22.8268396Z ##[endgroup]
+2026-09-05T06:38:22.8269619Z ##[group]Determining the checkout info
+2026-09-05T06:38:22.8271010Z ##[endgroup]
+2026-09-05T06:38:22.8277104Z [command]/usr/bin/git sparse-checkout disable
+2026-09-05T06:38:22.8332680Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-05T06:38:22.8366350Z ##[group]Checking out the ref
+2026-09-05T06:38:22.8370788Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-09-05T06:38:22.8821947Z Switched to a new branch 'main'
+2026-09-05T06:38:22.8827552Z branch 'main' set up to track 'origin/main'.
+2026-09-05T06:38:22.8835350Z ##[endgroup]
+2026-09-05T06:38:22.8883869Z [command]/usr/bin/git log -1 --format=%H
+2026-09-05T06:38:22.8910836Z bddb8420a69db29b835c05826d7f9d02a870545a

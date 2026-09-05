@@ -1,0 +1,34 @@
+﻿2026-09-05T06:39:23.5797129Z ##[group]Run python scripts/run_scheduled_pipeline.py
+2026-09-05T06:39:23.5797565Z [36;1mpython scripts/run_scheduled_pipeline.py[0m
+2026-09-05T06:39:23.5835098Z shell: /usr/bin/bash -e {0}
+2026-09-05T06:39:23.5835407Z env:
+2026-09-05T06:39:23.5835718Z   DATABASE_URL: 
+2026-09-05T06:39:23.5836088Z   GEMINI_API_KEY: 
+2026-09-05T06:39:23.5836443Z   GEMINI_MODEL: gemini-1.5-flash
+2026-09-05T06:39:23.5836868Z   PIPELINE_SCOPE: fresh_sample
+2026-09-05T06:39:23.5837162Z   PIPELINE_CAP: 40
+2026-09-05T06:39:23.5837413Z   PIPELINE_SOURCES: google_play,reddit_rss
+2026-09-05T06:39:23.5837765Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-09-05T06:39:23.5838206Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-09-05T06:39:23.5838667Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-09-05T06:39:23.5839050Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-09-05T06:39:23.5839434Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-09-05T06:39:23.5839858Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-09-05T06:39:23.5840178Z ##[endgroup]
+2026-09-05T06:39:23.6739444Z Traceback (most recent call last):
+2026-09-05T06:39:23.6747036Z   File "/home/runner/work/Myntra-review-Engine/Myntra-review-Engine/scripts/run_scheduled_pipeline.py", line 12, in <module>
+2026-09-05T06:39:23.6747933Z     from backend.app.worker import run_once
+2026-09-05T06:39:23.6748724Z   File "/home/runner/work/Myntra-review-Engine/Myntra-review-Engine/backend/app/worker.py", line 18, in <module>
+2026-09-05T06:39:23.6749568Z     from backend.app.connectors.reddit_rss import RedditRSSConnector
+2026-09-05T06:39:23.6750505Z   File "/home/runner/work/Myntra-review-Engine/Myntra-review-Engine/backend/app/connectors/reddit_rss.py", line 9, in <module>
+2026-09-05T06:39:23.6751559Z     import requests
+2026-09-05T06:39:23.6752230Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/requests/__init__.py", line 43, in <module>
+2026-09-05T06:39:23.6753005Z     import urllib3
+2026-09-05T06:39:23.6753828Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/urllib3/__init__.py", line 7, in <module>
+2026-09-05T06:39:23.6754783Z     from .connectionpool import HTTPConnectionPool, HTTPSConnectionPool, connection_from_url
+2026-09-05T06:39:23.6755829Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/urllib3/connectionpool.py", line 11, in <module>
+2026-09-05T06:39:23.6756502Z     from .exceptions import (
+2026-09-05T06:39:23.6757044Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/urllib3/exceptions.py", line 2, in <module>
+2026-09-05T06:39:23.6757744Z     from .packages.six.moves.http_client import IncompleteRead as httplib_IncompleteRead
+2026-09-05T06:39:23.6758276Z ModuleNotFoundError: No module named 'urllib3.packages.six.moves'
+2026-09-05T06:39:23.6875794Z ##[error]Process completed with exit code 1.
